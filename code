@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] arr = Enumerable.Range(0, 1000+1).ToArray();
+            int[,] mat = new int[4, 5] {
+                                    { 1, 12, 7, 10, 11 },
+                                    { 8, 23, 6, 13, 14 },
+                                    { 9, 4, 5, 15, 16 },
+                                    { 49, 44, 35, 15, 16 }
+                                };
+            int[] x = new int[1100000];
+            int[] y = new int[1100000];
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    x[mat[i, j]] = i;
+                    y[mat[i, j]] = j;
+                }
+
+            }               
+ Console.WriteLine(string.Format("Length of the longest path is {0}", longestpath(x, y, 1000, mat).ToString()));
+                Console.ReadLine();
+
+        }
+
+        public static int abs(int x)
+        {
+            return (x > 0) ? x : (-1 * x);
+        }
+        public static int longestpath(int[] x , int[] y, int n, int[,] mat)
+        {
+            int temp, max;
+            temp = 1;
+            max = 0;
+            for (int i = 0; i < n * n; i++)
+            {
+                if (((x[i + 1] == x[i]) && (abs(y[i + 1] - y[i]) == 1)) || ((y[i + 1] == y[i]) && (abs(x[i + 1] - x[i]) == 1)))
+                    temp++;
+                else
+                {
+                    if (max < temp)
+                        max = temp;
+                    temp = 1;
+                }
+            }
+            return max;
+
+        }
+    }
+}
